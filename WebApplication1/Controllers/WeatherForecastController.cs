@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers
             _logger.LogInformation("I was called!");
             return _hueService.TurnLight(turnOn);
         }
-
+        
         [HttpGet("/dodisco")]
         public string DoDisco()
         {
@@ -58,6 +58,12 @@ namespace WebApplication1.Controllers
         public string SayHi()
         {
             return "Hello there!";
+        }
+        
+        [HttpGet("/saysomething")]
+        public string SaySomething()
+        {
+            return "SAYING SOMETHING!";
         }
     }
 }
