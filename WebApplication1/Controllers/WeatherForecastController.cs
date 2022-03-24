@@ -17,12 +17,30 @@ namespace WebApplication1.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IHueService _hueService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IHueService hueService)
         {
             _logger = logger;
+            _hueService = hueService;
+            _logger.LogInformation("Constructor call");
         }
 
+        [HttpPut("/turnlight9")]
+        public Task TurnLight9([FromBody] string turnOn)
+        {
+            _logger.LogInformation("I was called!");
+            return _hueService.TurnLight(turnOn);
+        }
+
+        [HttpGet("/dodisco")]
+        public string DoDisco()
+        {
+            _logger.LogInformation("Doing disco!");
+            _hueService.PerformCoolLightShow();
+            return "done";
+        }
+        
         [HttpGet("/GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

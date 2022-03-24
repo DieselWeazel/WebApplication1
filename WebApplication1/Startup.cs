@@ -26,6 +26,15 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<Oauth2HueBearer>();
+            services.AddSingleton<IOAuth2>(provider =>
+                provider.GetRequiredService<Oauth2HueBearer>());
+            services.AddHttpClient("ServiceHttpClient")
+                .AddHttpMessageHandler<Oauth2HueBearer>();
+
+            services.AddSingleton<HueService>();
+            services.AddSingleton<IHueService>(provider =>
+                provider.GetRequiredService<HueService>());
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
